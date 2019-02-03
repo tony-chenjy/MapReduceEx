@@ -17,8 +17,12 @@ import java.io.IOException;
  */
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
+        String inputPath = "src/main/resources/sentiment_analysis/input";
+        String outputPath = "src/main/resources/sentiment_analysis/output";
+        String dictionaryPath = "src/main/resources/sentiment_analysis/emotionCategory.txt";
+
         Configuration conf = new Configuration();
-        conf.set("dictionary", args[2]);
+        conf.set("dictionary", dictionaryPath);
 
         Job job = Job.getInstance(conf);
 
@@ -33,8 +37,8 @@ public class Main {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(LongWritable.class);
 
-        FileInputFormat.setInputPaths(job, new Path(args[0]));
-        FileOutputFormat.setOutputPath(job, new Path(args[1]));
+        FileInputFormat.setInputPaths(job, new Path(inputPath));
+        FileOutputFormat.setOutputPath(job, new Path(outputPath + (int)(Math.random() * 100)));
 
         job.waitForCompletion(true);
     }

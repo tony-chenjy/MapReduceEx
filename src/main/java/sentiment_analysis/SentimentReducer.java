@@ -13,11 +13,10 @@ import java.io.IOException;
  */
 public class SentimentReducer extends Reducer<Text, IntWritable, Text, LongWritable>{
     protected void reduce(Text key, Iterable<IntWritable> values, Reducer<Text, IntWritable, Text, LongWritable>.Context context) throws IOException, InterruptedException {
-//        Iterator i$ = values.iterator();
-//
-//        while(i$.hasNext()) {
-//            VALUEIN value = i$.next();
-//            context.write(key, value);
-//        }
+        long sum = 0;
+        for (IntWritable value : values) {
+            sum += value.get();
+        }
+        context.write(key, new LongWritable(sum));
     }
 }
