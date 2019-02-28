@@ -70,7 +70,7 @@ public class LanguageModel {
 
         protected void reduce(Text key, Iterable<Text> values, Reducer<Text, Text, DBOutputWritable, NullWritable>.Context context) throws IOException, InterruptedException {
 
-            // {50, [girls, boys]}, {60, [data]}
+            // {50, [girls, boys]}, {60, [flowlog]}
             Map<Integer, List<String>> map = new TreeMap<>();
             for (Text value : values) {
                 String[] phrase = value.toString().trim().split("=");
