@@ -1,6 +1,7 @@
 package flow_sum;
 
 import org.apache.hadoop.io.Writable;
+import org.apache.hadoop.io.WritableComparable;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -10,7 +11,7 @@ import java.io.IOException;
  * @author tony.chenjy
  * @date 2019-03-07
  */
-public class FlowBean implements Writable {
+public class FlowBean implements WritableComparable<FlowBean> {
 
     private long download_sum;
     private long upload_sum;
@@ -26,6 +27,11 @@ public class FlowBean implements Writable {
         this.download_sum = download_sum;
         this.upload_sum = upload_sum;
         this.total_sum = this.download_sum + this.upload_sum;
+    }
+
+    @Override
+    public String toString() {
+        return this.download_sum + "\t" + this.upload_sum + "\t" + this.total_sum;
     }
 
     public long getDownload_sum() {
@@ -64,5 +70,10 @@ public class FlowBean implements Writable {
         this.download_sum = dataInput.readLong();
         this.upload_sum = dataInput.readLong();
         this.total_sum = dataInput.readLong();
+    }
+
+    @Override
+    public int compareTo(FlowBean o) {
+        return (int)(o.total_sum - this.total_sum);
     }
 }

@@ -48,7 +48,7 @@ public class FlowSumMapReduce {
             // outputKey: phone_number
             // outputValue: download_flow\tupload_flow\ttotal_flow
 
-            long upload_flow = 0, download_flow = 0, total_flow = 0;
+            long upload_flow = 0, download_flow = 0;
             for (FlowBean value : values) {
                 download_flow += value.getDownload_sum();
                 upload_flow += value.getUpload_sum();
@@ -60,7 +60,7 @@ public class FlowSumMapReduce {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         String inputPath = "src/main/resources/flow_sum/input";
-        String outputPath = "src/main/resources/flow_sum/output";
+        String outputPath = "src/main/resources/flow_sum/output/sum";
 
         Configuration conf = new Configuration();
 
@@ -68,8 +68,8 @@ public class FlowSumMapReduce {
 
         job.setJarByClass(FlowSumMapReduce.class);
 
-        job.setMapperClass(FlowSumMapReduce.FlowSumMapper.class);
-        job.setReducerClass(FlowSumMapReduce.FlowSumReducer.class);
+        job.setMapperClass(FlowSumMapper.class);
+        job.setReducerClass(FlowSumReducer.class);
 
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(FlowBean.class);
