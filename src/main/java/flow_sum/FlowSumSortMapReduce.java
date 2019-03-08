@@ -47,8 +47,8 @@ public class FlowSumSortMapReduce {
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-        String inputPath = "src/main/resources/flow_sum/output/sum";
-        String outputPath = "src/main/resources/flow_sum/output/sort";
+        String inputPath = args[0]; // "src/main/resources/flow_sum/output/sum";
+        String outputPath = args[1]; // "src/main/resources/flow_sum/output/sort";
 
         org.apache.hadoop.conf.Configuration conf = new Configuration();
 

@@ -14,19 +14,19 @@ public class ProvincePartitioner extends Partitioner<Text, FlowBean> {
     public static Map<String, Integer> provinceMap = new HashMap();
 
     static {
-        provinceMap.put("137", 0); //模拟手机归属地
-        provinceMap.put("138", 1);
-        provinceMap.put("139", 2);
+        provinceMap.put("137", 1); //模拟手机归属地
+        provinceMap.put("138", 2);
+        provinceMap.put("139", 3);
     }
 
     @Override
-    public int getPartition(Text text, FlowBean flowBean, int i) {
-        Integer code = provinceMap.get(text.toString().substring(0, 3));
+    public int getPartition(Text text, FlowBean flowBean, int numTaskReduce) {
+        String prefix = text.toString().substring(0, 3);
+        Integer part = provinceMap.get(prefix);
 
-        if (code != null) {
-            return code;
+        if (part == null) {
+            return 0;
         }
-
-        return 3; //不在上方列表中的
+        return part % numTaskReduce;
     }
 }

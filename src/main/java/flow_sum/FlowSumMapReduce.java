@@ -59,8 +59,8 @@ public class FlowSumMapReduce {
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-        String inputPath = "src/main/resources/flow_sum/input";
-        String outputPath = "src/main/resources/flow_sum/output/sum";
+        String inputPath = args[0]; // "src/main/resources/flow_sum/input";
+        String outputPath = args[1]; //"src/main/resources/flow_sum/output/sum";
 
         Configuration conf = new Configuration();
 

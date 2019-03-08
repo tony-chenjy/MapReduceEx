@@ -82,7 +82,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>word_count.Main</mainClass>
+                            <mainClass>word_count.WordCountMapReduce</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

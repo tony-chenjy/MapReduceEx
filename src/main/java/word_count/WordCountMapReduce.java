@@ -18,7 +18,7 @@ import java.io.IOException;
  * @author cm
  * @date 2019/2/2 0002 11:29
  */
-public class Main {
+public class WordCountMapReduce {
 
     public static class WordMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
         @Override
@@ -47,14 +47,14 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-        String inputPath = "src/main/resources/word_count/input";
-        String outputPath = "src/main/resources/word_count/output";
+        String inputPath = args[0]; // "src/main/resources/word_count/input";
+        String outputPath = args[1]; // "src/main/resources/word_count/output";
 
         Configuration conf = new Configuration();
 
         Job job = Job.getInstance(conf);
 
-        job.setJarByClass(Main.class);
+        job.setJarByClass(WordCountMapReduce.class);
 
         job.setMapperClass(WordMapper.class);
         job.setReducerClass(WordReducer.class);
@@ -66,7 +66,7 @@ public class Main {
         job.setOutputValueClass(IntWritable.class);
 
         FileInputFormat.setInputPaths(job, inputPath);
-        FileOutputFormat.setOutputPath(job, new Path(outputPath + (int) (Math.random() * 1000)));
+        FileOutputFormat.setOutputPath(job, new Path(outputPath));
 
         job.waitForCompletion(true);
     }
