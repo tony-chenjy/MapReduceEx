@@ -23,14 +23,16 @@ public class FlowSumProvinceMapReduce {
     public static class FlowSumProvinceMapper extends Mapper<LongWritable, Text, Text, FlowBean> {
         Text outputKey = new Text();
         FlowBean outputValue = new FlowBean();
+
         protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, FlowBean>.Context context) throws IOException, InterruptedException {
             // inputValue: 13726230503	14493	58893	73386
             // outputKey: phone_number
             // outputValue: download_flow\tupload_flow\ttotal_flow
+
             String[] phone_flows = value.toString().trim().split("\t");
 
             outputKey.set(phone_flows[0]);
-            outputValue.setFlow(Long.valueOf(phone_flows[1]), Long.valueOf(phone_flows[2]));
+            outputValue.setFlow(Long.parseLong(phone_flows[1]), Long.parseLong(phone_flows[2]));
             context.write(outputKey, outputValue);
         }
     }
@@ -42,6 +44,7 @@ public class FlowSumProvinceMapReduce {
             // inputValue: <download_flow\tupload_flow\ttotal_flow, ...>
             // outputKey: phone_number
             // outputValue: download_flow\tupload_flow\ttotal_flow
+
             for (FlowBean value : values) {
                 context.write(key, value);
             }
@@ -49,8 +52,7 @@ public class FlowSumProvinceMapReduce {
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-        String inputPath = args[0]; // "src/main/resources/flow_sum/output/sum";
-        String outputPath = args[1]; // "src/main/resources/flow_sum/output/province";
+        // args = new String[]{"src/main/resources/flow_sum/output/sum", "src/main/resources/flow_sum/output/province"};
 
         Configuration conf = new Configuration();
 
@@ -67,8 +69,8 @@ public class FlowSumProvinceMapReduce {
         job.setNumReduceTasks(4);
         job.setPartitionerClass(ProvincePartitioner.class);
 
-        FileInputFormat.setInputPaths(job, inputPath);
-        FileOutputFormat.setOutputPath(job, new Path(outputPath));
+        FileInputFormat.setInputPaths(job, args[0]);
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
         job.waitForCompletion(true);
     }

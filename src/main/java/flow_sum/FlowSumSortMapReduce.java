@@ -19,36 +19,38 @@ import java.io.IOException;
 public class FlowSumSortMapReduce {
 
     public static class FlowSumSortMapper extends Mapper<LongWritable, Text, FlowBean, Text> {
-        Text v = new Text();
-        FlowBean k = new FlowBean();
+        Text outputValue = new Text();
+        FlowBean outputKey = new FlowBean();
 
         protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, FlowBean, Text>.Context context) throws IOException, InterruptedException {
-            // input value : phone_number\tdownload_sum\tupload_sum\ttotal_sum
-            // output key : phone_number
+            // input value : phone_number \t download_sum \t upload_sum \t total_sum
             // output value : download_sum\tupload_sum\ttotal_sum
+            // output key : phone_number
+
             String[] fields = value.toString().trim().split("\t");
             String phoneNum = fields[0];
 
             long upFlow = Long.parseLong(fields[1]);
             long downFlow = Long.parseLong(fields[2]);
 
-            k.setFlow(upFlow,downFlow);
-            v.set(phoneNum);
+            outputKey.setFlow(upFlow,downFlow);
+            outputValue.set(phoneNum);
 
-            context.write(k,v);
+            context.write(outputKey, outputValue);
         }
     }
 
     public static class FlowSumSortReducer extends Reducer<FlowBean, Text, Text, FlowBean> {
 
         protected void reduce(FlowBean key, Iterable<Text> values, Reducer<FlowBean, Text, Text, FlowBean>.Context context) throws IOException, InterruptedException {
-            context.write(values.iterator().next(),key);
+            for (Text value : values) {
+                context.write(value, key);
+            }
         }
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-        String inputPath = args[0]; // "src/main/resources/flow_sum/output/sum";
-        String outputPath = args[1]; // "src/main/resources/flow_sum/output/sort";
+        // args = new String[]{"src/main/resources/flow_sum/output/sum", "src/main/resources/flow_sum/output/sort"};
 
         org.apache.hadoop.conf.Configuration conf = new Configuration();
 
@@ -65,8 +67,8 @@ public class FlowSumSortMapReduce {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(FlowBean.class);
 
-        FileInputFormat.setInputPaths(job, inputPath);
-        FileOutputFormat.setOutputPath(job, new Path(outputPath));
+        FileInputFormat.setInputPaths(job, args[0]);
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
         job.waitForCompletion(true);
     }

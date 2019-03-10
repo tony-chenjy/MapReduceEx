@@ -4,13 +4,17 @@ import java.io.IOException;
 
 public class Driver {
     public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException {
-        String inputPath = "src/main/resources/flow_sum/input";
-        String outputSumPath = "src/main/resources/flow_sum/output/sum";
-        String outputSortPath = "src/main/resources/flow_sum/output/sort";
-        String outputProvicePath = "src/main/resources/flow_sum/output/province";
+        args = new String[]{"src/main/resources/flow_sum/input",
+                            "src/main/resources/flow_sum/output/sum",
+                            "src/main/resources/flow_sum/output/sort",
+                            "src/main/resources/flow_sum/output/province"};
 
-        FlowSumMapReduce.main(new String[]{inputPath, outputSumPath});
-        FlowSumSortMapReduce.main(new String[]{outputSumPath, outputSortPath});
-        FlowSumProvinceMapReduce.main(new String[]{outputSumPath, outputProvicePath});
+        String[] sumPaths = new String[]{args[0], args[1]};
+        String[] sumSortPaths = new String[]{args[1], args[2]};
+        String[] provincePartitionPaths = new String[]{args[1], args[3]};
+
+        FlowSumMapReduce.main(sumPaths);
+        FlowSumSortMapReduce.main(sumSortPaths);
+        FlowSumProvinceMapReduce.main(provincePartitionPaths);
     }
 }

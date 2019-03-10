@@ -25,7 +25,7 @@ public class FlowSumMapReduce {
         protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, FlowBean>.Context context) throws IOException, InterruptedException {
             // inputValue: 13726230503	00-FD-07-A4-72-B8:CMCC	120.196.100.82	i02.c.aliimg.com	24	27	2481	24681	200
             // outputKey: phone_number
-            // outputValue: download_flow\tupload_flow
+            // outputValue: download_flow \t upload_flow
 
             String[] fields = value.toString().trim().split("\t");
 
@@ -34,7 +34,7 @@ public class FlowSumMapReduce {
             String upload_flow = fields[fields.length - 2];
 
             outputKey.set(phone_number);
-            outputValue.setFlow(Long.valueOf(download_flow), Long.valueOf(upload_flow));
+            outputValue.setFlow(Long.parseLong(download_flow), Long.parseLong(upload_flow));
             context.write(outputKey, outputValue);
         }
     }
@@ -59,8 +59,7 @@ public class FlowSumMapReduce {
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-        String inputPath = args[0]; // "src/main/resources/flow_sum/input";
-        String outputPath = args[1]; //"src/main/resources/flow_sum/output/sum";
+        // args = new String[] {"src/main/resources/flow_sum/input", "src/main/resources/flow_sum/output/sum"};
 
         Configuration conf = new Configuration();
 
@@ -74,8 +73,8 @@ public class FlowSumMapReduce {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(FlowBean.class);
 
-        FileInputFormat.setInputPaths(job, inputPath);
-        FileOutputFormat.setOutputPath(job, new Path(outputPath));
+        FileInputFormat.setInputPaths(job, args[0]);
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
         job.waitForCompletion(true);
     }

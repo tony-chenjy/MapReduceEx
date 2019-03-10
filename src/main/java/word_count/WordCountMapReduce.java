@@ -23,32 +23,28 @@ public class WordCountMapReduce {
     public static class WordMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
         @Override
         protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, IntWritable>.Context context) throws IOException, InterruptedException {
-            final IntWritable ONE = new IntWritable(1);
-
-            String line = value.toString();
-            String[] words = line.split("\\s+");
+            String[] words = value.toString().trim().split("\\s");
 
             for (String word : words) {
-                context.write(new Text(word), ONE);
+                context.write(new Text(word), new IntWritable(1));
             }
         }
     }
 
-    public static class WordReducer extends Reducer<Text, IntWritable, Text, LongWritable> {
+    public static class WordReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
         @Override
-        protected void reduce(Text key, Iterable<IntWritable> values, Reducer<Text, IntWritable, Text, LongWritable>.Context context) throws IOException, InterruptedException {
-            long count = 0;
+        protected void reduce(Text key, Iterable<IntWritable> values, Reducer<Text, IntWritable, Text, IntWritable>.Context context) throws IOException, InterruptedException {
+            int count = 0;
             for (IntWritable value : values) {
                 count += value.get();
             }
 
-            context.write(key, new LongWritable(count));
+            context.write(key, new IntWritable(count));
         }
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-        String inputPath = args[0]; // "src/main/resources/word_count/input";
-        String outputPath = args[1]; // "src/main/resources/word_count/output";
+        // args = new String[]{"src/main/resources/word_count/input", "src/main/resources/word_count/output"};
 
         Configuration conf = new Configuration();
 
@@ -65,8 +61,8 @@ public class WordCountMapReduce {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
 
-        FileInputFormat.setInputPaths(job, inputPath);
-        FileOutputFormat.setOutputPath(job, new Path(outputPath));
+        FileInputFormat.setInputPaths(job, args[0]);
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
         job.waitForCompletion(true);
     }

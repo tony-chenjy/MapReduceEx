@@ -9,7 +9,7 @@ import java.util.*;
  * @author cm
  * @date 2019/2/6 0006 21:34
  */
-public class Main {
+public class InvertedIndexMapReduce {
 
     public static class Map {
         public void map(String key, Document value, OutputCollector<String, Integer> output) throws IOException {
