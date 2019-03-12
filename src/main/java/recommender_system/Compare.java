@@ -25,7 +25,7 @@ public class Compare {
         // map method
         @Override
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-            // input : user,movie,rating
+            // input_small : user,movie,rating
             // output : user:movie rating
 
             String[] userMovieRating = value.toString().trim().split(",");
@@ -38,7 +38,7 @@ public class Compare {
         // map method
         @Override
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-            // input : user:movie prediction
+            // input_small : user:movie prediction
             // output : user:movie prediction
 
             String[] userMoviePrediction = value.toString().trim().split("\t");
@@ -50,7 +50,7 @@ public class Compare {
         // reduce method
         @Override
         public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-            // input : user:movie <rating, rating(prediction)>
+            // input_small : user:movie <rating, rating(prediction)>
             // outputKey : user:movie
             // outputValue : rating vs rating(prediction)
 
@@ -65,7 +65,7 @@ public class Compare {
             }
 
             if (originRating == null) {
-                originRating = "0.0";
+                originRating = "---";
                 context.write(key, new Text(originRating + "\tvs\t" + predictRating));
             } else {
                 context.write(key, new Text(originRating + "\tvs\t" + predictRating));
@@ -74,7 +74,7 @@ public class Compare {
     }
 
     public static void main(String[] args) throws Exception {
-//        args = new String[]{"src/main/resources/recommender_system/input/userRating.txt",
+//        args = new String[]{"src/main/resources/recommender_system/input_small/userRating.txt",
 //                            "src/main/resources/recommender_system/output/sum",
 //                            "src/main/resources/recommender_system/output/compare"};
 

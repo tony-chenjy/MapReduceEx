@@ -23,7 +23,7 @@ public class Normalize {
         // map method
         @Override
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-            // input : movieA:movieB \t relation
+            // input_small : movieA:movieB \t relation
             // outputKey : movieA
             // outputValue : movieB=relation
 
@@ -38,7 +38,7 @@ public class Normalize {
         // reduce method
         @Override
         public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-            // input : movieA <movieB=relation, movieC=relation, ...>
+            // input_small : movieA <movieB=relation, movieC=relation, ...>
             // normalize each unit of co-occurrence matrix & transpose
             // outputKey : movieB
             // outputValue : movieA=relation/sum

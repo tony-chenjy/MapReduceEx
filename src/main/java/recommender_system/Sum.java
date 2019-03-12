@@ -25,7 +25,7 @@ public class Sum {
         // map method
         @Override
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-            // input : userId:movieId rating
+            // input_small : userId:movieId rating
 
             String[] userMovieRating = value.toString().trim().split("\t");
             double rating = Double.parseDouble(userMovieRating[1]);
@@ -38,7 +38,7 @@ public class Sum {
         @Override
         public void reduce(Text key, Iterable<DoubleWritable> values, Context context)
                 throws IOException, InterruptedException {
-            // input : userId:movieId rating
+            // input_small : userId:movieId rating
             // calculate the sum
 
             double sum = 0;

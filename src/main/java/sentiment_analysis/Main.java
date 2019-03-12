@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-        String inputPath = "src/main/resources/sentiment_analysis/input";
+        String inputPath = "src/main/resources/sentiment_analysis/input_small";
         String outputPath = "src/main/resources/sentiment_analysis/output";
         String dictionaryPath = "src/main/resources/sentiment_analysis/emotionCategory.txt";
 

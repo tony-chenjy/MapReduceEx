@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class Driver {
     public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException {
-        args = new String[]{"src/main/resources/word_count/input", "src/main/resources/word_count/output"};
+        args = new String[]{"src/main/resources/word_count/input_small", "src/main/resources/word_count/output"};
 
         WordCountMapReduce.main(args);
     }

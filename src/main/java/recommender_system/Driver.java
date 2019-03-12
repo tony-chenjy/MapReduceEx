@@ -2,7 +2,8 @@ package recommender_system;
 
 public class Driver {
 	public static void main(String[] args) throws Exception {
-		args = new String[]{"src/main/resources/recommender_system/input/userRating.txt",
+		args = new String[]{// "src/main/resources/recommender_system/input_small/*",
+							"src/main/resources/recommender_system/input_big/*",
 							"src/main/resources/recommender_system/output/userRatingList",
 							"src/main/resources/recommender_system/output/coOccurrenceMatrix",
 							"src/main/resources/recommender_system/output/normalizeMatrix",

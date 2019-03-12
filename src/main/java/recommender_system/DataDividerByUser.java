@@ -21,7 +21,7 @@ public class DataDividerByUser {
 		// map method
 		@Override
 		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-			// input : userId,movieId,rating
+			// input_small : userId,movieId,rating
 			// output : userId \t movieId=rating
 
 			String[] userMovieRating = value.toString().trim().split(",");
@@ -33,7 +33,7 @@ public class DataDividerByUser {
 		// reduce method
 		@Override
 		public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-			// input : userId <movieId=rating, ...>
+			// input_small : userId <movieId=rating, ...>
 			//calculate each user rating list: <movieA=rating, movieB=rating>
 			// output : userId movieId=rating,...
 
@@ -46,7 +46,7 @@ public class DataDividerByUser {
 	}
 
 	public static void main(String[] args) throws Exception {
-//		args = new String[]{"src/main/resources/recommender_system/input/userRating.txt",
+//		args = new String[]{"src/main/resources/recommender_system/input_small/userRating.txt",
 //							"src/main/resources/recommender_system/output/userRatingList"};
 
 		Configuration conf = new Configuration();

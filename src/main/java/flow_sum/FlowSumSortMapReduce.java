@@ -23,7 +23,7 @@ public class FlowSumSortMapReduce {
         FlowBean outputKey = new FlowBean();
 
         protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, FlowBean, Text>.Context context) throws IOException, InterruptedException {
-            // input value : phone_number \t download_sum \t upload_sum \t total_sum
+            // input_small value : phone_number \t download_sum \t upload_sum \t total_sum
             // output value : download_sum\tupload_sum\ttotal_sum
             // output key : phone_number
 

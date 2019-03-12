@@ -26,7 +26,7 @@ public class AverageRating {
         // map method
         @Override
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-            // input : userId,movieId,rating
+            // input_small : userId,movieId,rating
             // output : userId rating
 
             String[] userMovieRating = value.toString().trim().split(",");
@@ -38,7 +38,7 @@ public class AverageRating {
         // reduce method
         @Override
         public void reduce(Text key, Iterable<DoubleWritable> values, Context context) throws IOException, InterruptedException {
-            // input : userId <rating, rating, ...>
+            // input_small : userId <rating, rating, ...>
             // calculate each user average rating: average
             // output : userId averageRating
 
@@ -56,7 +56,7 @@ public class AverageRating {
     }
 
     public static void main(String[] args) throws Exception {
-//        args = new String[]{"src/main/resources/recommender_system/input/userRating.txt",
+//        args = new String[]{"src/main/resources/recommender_system/input_small/userRating.txt",
 //                            "src/main/resources/recommender_system/output/userAverageRating"};
 
         Configuration conf = new Configuration();

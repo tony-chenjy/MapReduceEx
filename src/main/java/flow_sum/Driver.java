@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class Driver {
     public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException {
-        args = new String[]{"src/main/resources/flow_sum/input",
+        args = new String[]{"src/main/resources/flow_sum/input_small",
                             "src/main/resources/flow_sum/output/sum",
                             "src/main/resources/flow_sum/output/sort",
                             "src/main/resources/flow_sum/output/province"};

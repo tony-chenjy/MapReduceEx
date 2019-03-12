@@ -21,7 +21,7 @@ public class CoOccurrenceMatrixGenerator {
 		// map method
 		@Override
 		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-			// input : userId \t movieId1=rating,movieId2=rating,...
+			// input_small : userId \t movieId1=rating,movieId2=rating,...
 			// outputKey : movieId1:movieId2
 			// outputValue : 1
 
@@ -44,7 +44,7 @@ public class CoOccurrenceMatrixGenerator {
 		@Override
 		public void reduce(Text key, Iterable<IntWritable> values, Context context)
 				throws IOException, InterruptedException {
-			// input : movie1:movie2 <1, 1, 1>
+			// input_small : movie1:movie2 <1, 1, 1>
 			// calculate each two movies have been watched by how many people
 
 			int sum = 0;

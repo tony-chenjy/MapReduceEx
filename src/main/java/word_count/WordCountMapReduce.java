@@ -44,7 +44,7 @@ public class WordCountMapReduce {
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-        // args = new String[]{"src/main/resources/word_count/input", "src/main/resources/word_count/output"};
+        // args = new String[]{"src/main/resources/word_count/input_small", "src/main/resources/word_count/output"};
 
         Configuration conf = new Configuration();
 

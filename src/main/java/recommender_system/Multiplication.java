@@ -27,7 +27,7 @@ public class Multiplication {
 		// map method
 		@Override
 		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-			// input : movieB \t movieA=relation
+			// input_small : movieB \t movieA=relation
 
 			String[] movieRelation = value.toString().trim().split("\t");
 			context.write(new Text(movieRelation[0]), new Text(movieRelation[1]));
@@ -39,7 +39,7 @@ public class Multiplication {
 		// map method
 		@Override
 		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-			// input : userId,movieId,rating
+			// input_small : userId,movieId,rating
 			// output : movieId userId:rating
 
 			String[] userMovieRating = value.toString().trim().split(",");
@@ -53,7 +53,7 @@ public class Multiplication {
 		@Override
 		public void reduce(Text key, Iterable<Text> values, Context context)
 				throws IOException, InterruptedException {
-			// input : movieB <movieA=relation, movieC=relation... userA:rating, userB:rating...>
+			// input_small : movieB <movieA=relation, movieC=relation... userA:rating, userB:rating...>
 			// collect the data for each movie, then do the multiplication
 			// outputKey : userA:movieA, userA:movieB, ..., userB:movieA, userB:movieB, ...
 			// outputValue : movieB=rating
@@ -87,7 +87,7 @@ public class Multiplication {
 
 	public static void main(String[] args) throws Exception {
 //		args = new String[]{"src/main/resources/recommender_system/output/normalizeMatrix",
-//							"src/main/resources/recommender_system/input/userRating.txt",
+//							"src/main/resources/recommender_system/input_small/userRating.txt",
 //							"src/main/resources/recommender_system/output/multiplicationUnit"};
 
 		Configuration conf = new Configuration();
